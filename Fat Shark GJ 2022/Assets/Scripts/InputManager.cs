@@ -12,6 +12,20 @@ public class InputManager : MonoBehaviour
     private Vector2 _mouseDownPosition;
     private bool _mouseDown;
 
+    public static InputManager inputManager;
+
+    void Awake()
+    {
+        if (inputManager == null)
+        {
+            inputManager = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
     private void FixedUpdate()
     {
         if (_mouseDown)
@@ -22,6 +36,11 @@ public class InputManager : MonoBehaviour
         {
             _ball.HideStrikeIndicator();
         }
+    }
+
+    public void ActivateBall()
+    {
+        _ball.Unlock();
     }
 
     public void LeftMouse(InputAction.CallbackContext context)
@@ -43,6 +62,10 @@ public class InputManager : MonoBehaviour
     private Vector2 CalculateStrike(Vector2 hitPosition, Vector2 releasePosition)
     {
         Vector2 strike = hitPosition - releasePosition;
+        if (strike.magnitude > _maxStrikeCharge)
+        {
+            strike = strike.normalized * _maxStrikeCharge;
+        }
         return strike;
     }
 
