@@ -8,9 +8,11 @@ public class BallControl : MonoBehaviour
 {
     [SerializeField][Range(0, 1f)] private float _strikeModifier;
     [SerializeField][Range(0, 1f)] private float _strikeIndicatorScaleModifier;
-    [SerializeField][Range(0, 1f)] private float _minimumVelocity;
-    [SerializeField][Range(0.5f, 5f)] private float _strikeIndicatorOffset;
+    [SerializeField] private float _minimumVelocity;
+    [SerializeField] private float _strikeIndicatorOffset;
+    [SerializeField] private float _scaleModifier;
     [SerializeField] GameObject _strikeIndicator;
+
     private Vector2 _respawn;
     private Rigidbody2D _rb;
     private bool _isMoving;
@@ -26,6 +28,7 @@ public class BallControl : MonoBehaviour
     public void Strike(Vector2 strike)
     {
         _rb.AddForce(strike * _strikeModifier, ForceMode2D.Impulse);
+        SoundManager.soundManager.PlaySwingSound();
     }
 
     private void FixedUpdate()
@@ -35,25 +38,22 @@ public class BallControl : MonoBehaviour
 
     private void CheckForStop()
     {
-        if (_rb.velocity.magnitude > _minimumVelocity) // l�gg till threshold
+        if (_rb.velocity == Vector2.zero)
         {
             if (_isMoving)
             {
-                _rb.velocity = Vector2.zero;
-                onBallStoppedMoving.Invoke();
-                Debug.Log("A ball stopped moving");
                 transform.rotation = Quaternion.identity;
                 _isMoving = false;
+                onBallStoppedMoving.Invoke();
+                Debug.Log("A ball stopped moving");
             }
         }
-        else
+
+        else if (_rb.velocity.magnitude > 0 && !_isMoving)
         {
-            if (!_isMoving)
-            {
-                onBallStartedMoving.Invoke();
-                Debug.Log("A ball started moving");
-            }
+            onBallStartedMoving.Invoke();
             _isMoving = true;
+            Debug.Log("A ball started moving");
         }
     }
 
@@ -68,21 +68,27 @@ public class BallControl : MonoBehaviour
         _strikeIndicator.SetActive(true);
 
         _strikeIndicator.transform.localPosition = - scaleVector * (scale + _strikeIndicatorOffset);
+
         if (scaleVector.x <= 0)
         {
-        _strikeIndicator.transform.rotation = Quaternion.Euler(Vector3.forward * Vector2.Angle(Vector2.up, scaleVector));
+            _strikeIndicator.transform.rotation = Quaternion.Euler(Vector3.back * Vector2.Angle(Vector2.down, scaleVector));
         }
         else
         {
             _strikeIndicator.transform.rotation = Quaternion.Euler(Vector3.forward * Vector2.Angle(Vector2.down, scaleVector));
         }
 
-        _strikeIndicator.transform.localScale = new Vector2(scale * 0.5f, scale);
+        _strikeIndicator.transform.localScale = new Vector2(scale * 0.5f, scale) * _scaleModifier;
     }
 
     public void HideStrikeIndicator()
     {
         _strikeIndicator.SetActive(false);
+    }
+
+    public void Unlock()
+    {
+        _rb.isKinematic = false;
     }
 
     public void SetWeight(float newWeight)

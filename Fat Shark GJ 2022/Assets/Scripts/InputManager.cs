@@ -12,6 +12,20 @@ public class InputManager : MonoBehaviour
     private Vector2 _mouseDownPosition;
     private bool _mouseDown;
 
+    public static InputManager inputManager;
+
+    void Awake()
+    {
+        if (inputManager == null)
+        {
+            inputManager = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
     private void FixedUpdate()
     {
         if (GameManager.gameManager.victory) return;
@@ -47,6 +61,10 @@ public class InputManager : MonoBehaviour
     private Vector2 CalculateStrike(Vector2 hitPosition, Vector2 releasePosition)
     {
         Vector2 strike = hitPosition - releasePosition;
+        if (strike.magnitude > _maxStrikeCharge)
+        {
+            strike = strike.normalized * _maxStrikeCharge;
+        }
         return strike;
     }
 
@@ -54,7 +72,8 @@ public class InputManager : MonoBehaviour
         _ball = GameManager.gameManager.GetCurrentPlayer().GetComponent<BallControl>();
     }
 
-    public void ChangeBall(){
+    public void ChangeBall()
+    {
         GameManager.gameManager.NextTurn();
         SetActiveBall();
     }

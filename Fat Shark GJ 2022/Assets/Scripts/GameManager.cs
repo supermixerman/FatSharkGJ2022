@@ -21,8 +21,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if (gameManager == null){
-            gameManager = this; 
+        if (gameManager == null)
+        {
+            gameManager = this;
         }
         else {
             Destroy(this);
