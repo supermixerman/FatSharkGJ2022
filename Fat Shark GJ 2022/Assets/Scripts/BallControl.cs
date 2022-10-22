@@ -9,7 +9,8 @@ public class BallControl : MonoBehaviour
     [SerializeField][Range(0, 1f)] private float _strikeModifier;
     [SerializeField][Range(0, 1f)] private float _strikeIndicatorScaleModifier;
     [SerializeField] private float _minimumVelocity;
-    [SerializeField][Range(0f, 1f)] private float _strikeIndicatorOffset;
+    [SerializeField] private float _strikeIndicatorOffset;
+    [SerializeField] private float _scaleModifier;
     [SerializeField] GameObject _strikeIndicator;
 
     private Vector2 _respawn;
@@ -65,17 +66,18 @@ public class BallControl : MonoBehaviour
 
         _strikeIndicator.SetActive(true);
 
-        _strikeIndicator.transform.localPosition = - scaleVector * (scale * _strikeIndicatorOffset);
+        _strikeIndicator.transform.localPosition = - scaleVector * (scale + _strikeIndicatorOffset);
+
         if (scaleVector.x <= 0)
         {
-        _strikeIndicator.transform.rotation = Quaternion.Euler(Vector3.forward * Vector2.Angle(Vector2.up, scaleVector));
+            _strikeIndicator.transform.rotation = Quaternion.Euler(Vector3.back * Vector2.Angle(Vector2.down, scaleVector));
         }
         else
         {
             _strikeIndicator.transform.rotation = Quaternion.Euler(Vector3.forward * Vector2.Angle(Vector2.down, scaleVector));
         }
 
-        _strikeIndicator.transform.localScale = new Vector2(scale * 0.5f, scale);
+        _strikeIndicator.transform.localScale = new Vector2(scale * 0.5f, scale) * _scaleModifier;
     }
 
     public void HideStrikeIndicator()
