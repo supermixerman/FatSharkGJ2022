@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour
     private Vector2 _mouseUpPosition;
     private Vector2 _mouseDownPosition;
     private bool _mouseDown;
+    private bool _didAction;
 
     public static InputManager inputManager;
 
@@ -43,7 +44,8 @@ public class InputManager : MonoBehaviour
     public void LeftMouse(InputAction.CallbackContext context)
     {
         if (GameManager.gameManager.victory) return;
-
+        if (_didAction) return;
+ 
         if (context.performed)
         {
             _mouseDownPosition = Mouse.current.position.ReadValue();
@@ -55,6 +57,7 @@ public class InputManager : MonoBehaviour
             _mouseDown = false;
 
             _ball.Strike(CalculateStrike(_mouseDownPosition, _mouseUpPosition));
+            _didAction = true;
         }
     }
 
@@ -68,13 +71,14 @@ public class InputManager : MonoBehaviour
         return strike;
     }
 
-    public void SetActiveBall(){
-        _ball = GameManager.gameManager.GetCurrentPlayer().GetComponent<BallControl>();
+    public void SetActiveBall(BallControl newBall){
+        _ball = newBall;
+        _didAction = false;
     }
 
-    public void ChangeBall()
-    {
-        GameManager.gameManager.NextTurn();
-        SetActiveBall();
-    }
+    //public void ChangeBall()
+    //{
+    //    GameManager.gameManager.NextTurn();
+    //    SetActiveBall();
+    //}
 }

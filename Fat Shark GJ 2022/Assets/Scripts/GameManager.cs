@@ -69,14 +69,15 @@ public class GameManager : MonoBehaviour
 
     public void CameraFollow(Transform target){
         Debug.Log("Camera Target: "+target);
-        mainCamera.transform.SetParent(target, false);
+        mainCamera.GetComponent<CameraFollow>().SetTarget(playerList[turn].transform);
         //mainCamera.transform.position = target.position;
     }
 
     public void TurnStart(){
         turn = 0;
         UpdateGameUI();
-        CameraFollow(playerList[0].transform);
+        CameraFollow(playerList[turn].transform);
+        InputManager.inputManager.SetActiveBall(playerList[turn].GetComponent<BallControl>());
         //turnText.text = "Turn: "+playerList[0].name;
     }
 
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Turn num = "+turn);
         UpdateGameUI();
         CameraFollow(playerList[turn].transform);
+        InputManager.inputManager.SetActiveBall(playerList[turn].GetComponent<BallControl>());
     }
 
     public void Victory(){
