@@ -14,6 +14,8 @@ public class InputManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameManager.gameManager.victory) return;
+        
         if (_mouseDown)
         {
             _ball.DrawStrikeIndicator(_mouseDownPosition, Mouse.current.position.ReadValue());
@@ -26,6 +28,8 @@ public class InputManager : MonoBehaviour
 
     public void LeftMouse(InputAction.CallbackContext context)
     {
+        if (GameManager.gameManager.victory) return;
+
         if (context.performed)
         {
             _mouseDownPosition = Mouse.current.position.ReadValue();

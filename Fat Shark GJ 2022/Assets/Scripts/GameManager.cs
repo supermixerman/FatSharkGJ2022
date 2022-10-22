@@ -1,22 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject playerPrefab, mainCamera, winner;
+    [SerializeField] GameObject playerPrefab, mainCamera, winnerScreen, inGameUI;
     [SerializeField] int playerAmount, turn;
     [SerializeField] List<GameObject> playerList;
     [SerializeField] List<Transform> spawnLocations;
     [SerializeField] List<Color> playerColorsList;
-    
+    [SerializeField] GameData gameData;
+
+    public bool victory;
+
+    UIText gameUI;
+
     public static GameManager gameManager;
 
     // Start is called before the first frame update
     void Awake()
     {
         if (gameManager == null){
-            gameManager = this;
+            gameManager = this; 
         }
         else {
             Destroy(this);
@@ -26,7 +32,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameUI = inGameUI.GetComponent<UIText>();
+        StartGame(gameData.totalPlayers);
     }
 
     public void StartGame(int players){
@@ -35,7 +42,6 @@ public class GameManager : MonoBehaviour
         TurnStart();
         //menuCanvas.SetActive(false);
         //gameCanvas.SetActive(true);
-
     }
 
     public GameObject GetCurrentPlayer(){
@@ -68,7 +74,7 @@ public class GameManager : MonoBehaviour
 
     public void TurnStart(){
         turn = 0;
-        //characterController.SetActivePlayer(playerList[0]);
+        UpdateGameUI();
         CameraFollow(playerList[0].transform);
         //turnText.text = "Turn: "+playerList[0].name;
     }
@@ -80,11 +86,26 @@ public class GameManager : MonoBehaviour
             turn = 0;
         }
         Debug.Log("Turn num = "+turn);
-        //characterController.SetActivePlayer(playerList[turn]);
+        UpdateGameUI();
         CameraFollow(playerList[turn].transform);
     }
 
     public void Victory(){
-        winner = playerList[turn];
+        victory = true;
+        winnerScreen.SetActive(true);
+        winnerScreen.GetComponent<UIText>().SetText("Winner: " + playerList[turn].name);
+    }
+
+    public void UpdateGameUI(){
+        gameUI.SetTextColor(playerColorsList[turn]);
+        gameUI.SetText(playerList[turn].name);
+    }
+
+    public void QuitGame(){
+        Application.Quit();
+    }
+
+    public void ResetGame(){
+        SceneManager.LoadScene(0);
     }
 }
