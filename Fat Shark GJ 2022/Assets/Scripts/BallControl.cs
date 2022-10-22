@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine;
 using System;
+using TreeEditor;
 
 public class BallControl : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class BallControl : MonoBehaviour
     private Vector2 _respawn;
     private Rigidbody2D _rb;
     private bool _isMoving;
+    private float _oldSpeed;
 
     public UnityEvent onBallStoppedMoving;
     public UnityEvent onBallStartedMoving;
@@ -28,11 +30,12 @@ public class BallControl : MonoBehaviour
     public void Strike(Vector2 strike)
     {
         _rb.AddForce(strike * _strikeModifier, ForceMode2D.Impulse);
-        SoundManager.soundManager.PlaySwingSound();
+        SoundManager.soundManager.PlaySwing();
     }
 
     private void FixedUpdate()
     {
+        ForceStop();
         CheckForStop();
     }
 
@@ -52,9 +55,19 @@ public class BallControl : MonoBehaviour
         else if (_rb.velocity.magnitude > 0 && !_isMoving)
         {
             onBallStartedMoving.Invoke();
+            _rb.freezeRotation = false;
             _isMoving = true;
             Debug.Log("A ball started moving");
         }
+    }
+
+    private void ForceStop()
+    {
+        if (_oldSpeed > _rb.velocity.magnitude && _rb.velocity.magnitude < _minimumVelocity)
+        {
+            _rb.freezeRotation = true;
+        }
+        _oldSpeed = _rb.velocity.magnitude;
     }
 
     public void DrawStrikeIndicator(Vector2 origin, Vector2 position)
@@ -86,25 +99,41 @@ public class BallControl : MonoBehaviour
         _strikeIndicator.SetActive(false);
     }
 
-    public void Unlock()
-    {
-        _rb.isKinematic = false;
-    }
-
     public void SetWeight(float newWeight)
     {
         _rb.mass = newWeight;
     
     }
-    private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.CompareTag("Respawn")){
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Respawn"))
+        {
             CheckPoint checkPoint = other.gameObject.GetComponent<CheckPoint>();
             _respawn = checkPoint.GetRespawnLocation();
 
-            if (checkPoint.IsWinCheck()){
+            if (checkPoint.IsWinCheck())
+            {
                 GameManager.gameManager.Victory();
             }
         }
+
+        else if (other.gameObject.CompareTag("Level"))
+        {
+            if (other.gameObject.transform.position.y < this.transform.position.y)
+            {
+
+            }
+        }
+
+        else if (other.gameObject.CompareTag("Hazard"))
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("A ball died");
     }
 }
 
