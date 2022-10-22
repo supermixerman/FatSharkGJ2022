@@ -46,6 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _swingSound: {fileID: 8300000, guid: 56ed50b0b5cd2064d8eaca9e193c1424, type: 3}
+  _grassSound: {fileID: 8300000, guid: 171abb55c9d9b4847b61e2bb59bf2cc2, type: 3}
+  _wallSound: {fileID: 8300000, guid: dfd8d991da346df458b62302bb279b5d, type: 3}
+  _scoreSound: {fileID: 8300000, guid: 326110fa07c5d7f4e940e128c79e5dcc, type: 3}
+  _deathSound: {fileID: 8300000, guid: 68012007d64206c4490139381a043c83, type: 3}
 --- !u!82 &5415729390693070920
 AudioSource:
   m_ObjectHideFlags: 0
