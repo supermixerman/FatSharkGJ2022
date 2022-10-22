@@ -45,4 +45,13 @@ public class InputManager : MonoBehaviour
         Vector2 strike = hitPosition - releasePosition;
         return strike;
     }
+
+    public void SetActiveBall(){
+        _ball = GameManager.gameManager.GetCurrentPlayer().GetComponent<BallControl>();
+    }
+
+    public void ChangeBall(){
+        GameManager.gameManager.NextTurn();
+        SetActiveBall();
+    }
 }

@@ -8,7 +8,7 @@ public class BallControl : MonoBehaviour
 {
     [SerializeField][Range(0, 1f)]private float _strikeModifier;
     [SerializeField] GameObject _strikeIndicator;
-
+    private Vector2 _respawn;
     private Rigidbody2D _rb;
 
     public UnityEvent onBallStop;
@@ -46,6 +46,17 @@ public class BallControl : MonoBehaviour
     public void HideStrikeIndicator()
     {
         _strikeIndicator.SetActive(false);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Respawn")){
+            CheckPoint checkPoint = other.gameObject.GetComponent<CheckPoint>();
+            _respawn = checkPoint.GetRespawnLocation();
+
+            if (checkPoint.IsWinCheck()){
+                GameManager.gameManager.Victory();
+            }
+        }
     }
 }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject playerPrefab, mainCamera;
+    [SerializeField] GameObject playerPrefab, mainCamera, winner;
     [SerializeField] int playerAmount, turn;
     [SerializeField] List<GameObject> playerList;
     [SerializeField] List<Transform> spawnLocations;
@@ -36,6 +36,10 @@ public class GameManager : MonoBehaviour
         //menuCanvas.SetActive(false);
         //gameCanvas.SetActive(true);
 
+    }
+
+    public GameObject GetCurrentPlayer(){
+        return playerList[turn];
     }
 
     public void SpawnPlayers(int amount){
@@ -78,5 +82,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("Turn num = "+turn);
         //characterController.SetActivePlayer(playerList[turn]);
         CameraFollow(playerList[turn].transform);
+    }
+
+    public void Victory(){
+        winner = playerList[turn];
     }
 }
