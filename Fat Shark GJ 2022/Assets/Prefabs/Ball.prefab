@@ -139,7 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _strikeModifier: 0.229
   _strikeIndicatorScaleModifier: 0.013
-  _minimumVelocity: 0.3
+  _minimumVelocity: 0.6
   _strikeIndicatorOffset: 0.13
   _scaleModifier: 0.52
   _strikeIndicator: {fileID: 8976692476124409168}
