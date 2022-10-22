@@ -28,6 +28,7 @@ public class BallControl : MonoBehaviour
     public void Strike(Vector2 strike)
     {
         _rb.AddForce(strike * _strikeModifier, ForceMode2D.Impulse);
+        SoundManager.soundManager.PlaySwingSound();
     }
 
     private void FixedUpdate()

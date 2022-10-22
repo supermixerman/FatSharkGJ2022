@@ -38,14 +38,6 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void ActivateBall(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            _ball.Unlock();
-        }
-    }
-
     public void LeftMouse(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -76,7 +68,8 @@ public class InputManager : MonoBehaviour
         _ball = GameManager.gameManager.GetCurrentPlayer().GetComponent<BallControl>();
     }
 
-    public void ChangeBall(){
+    public void ChangeBall()
+    {
         GameManager.gameManager.NextTurn();
         SetActiveBall();
     }
