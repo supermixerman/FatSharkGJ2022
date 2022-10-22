@@ -12,12 +12,14 @@ public class BallControl : MonoBehaviour
     [SerializeField] private float _minimumVelocity;
     [SerializeField] private float _strikeIndicatorOffset;
     [SerializeField] private float _scaleModifier;
+    [SerializeField] private float _levelFloorHeight;
     [SerializeField] GameObject _strikeIndicator;
 
-    private Vector2 _respawn;
+    private Vector2 _respawnPosition;
     private Rigidbody2D _rb;
     private bool _isMoving;
     private float _oldSpeed;
+    private float _myRadius;
 
     public UnityEvent onBallStoppedMoving;
     public UnityEvent onBallStartedMoving;
@@ -25,6 +27,7 @@ public class BallControl : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _myRadius = GetComponent<CircleCollider2D>().radius;
     }
 
     public void Strike(Vector2 strike)
@@ -109,7 +112,7 @@ public class BallControl : MonoBehaviour
         if (other.gameObject.CompareTag("Respawn"))
         {
             CheckPoint checkPoint = other.gameObject.GetComponent<CheckPoint>();
-            _respawn = checkPoint.GetRespawnLocation();
+            _respawnPosition = checkPoint.GetRespawnLocation();
 
             if (checkPoint.IsWinCheck())
             {
@@ -119,9 +122,13 @@ public class BallControl : MonoBehaviour
 
         else if (other.gameObject.CompareTag("Level"))
         {
-            if (other.gameObject.transform.position.y < this.transform.position.y)
+            if (other.gameObject.transform.position.y < this.transform.position.y - _myRadius && transform.position.y < _levelFloorHeight)
             {
-
+                SoundManager.soundManager.PlayHitGrass();
+            }
+            else
+            {
+                SoundManager.soundManager.PlayHitWall();
             }
         }
 
@@ -134,6 +141,8 @@ public class BallControl : MonoBehaviour
     private void Die()
     {
         Debug.Log("A ball died");
+        SoundManager.soundManager.PlayDeath();
+        transform.position = _respawnPosition;
     }
 }
 
