@@ -38,9 +38,12 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void ActivateBall()
+    public void ActivateBall(InputAction.CallbackContext context)
     {
-        _ball.Unlock();
+        if (context.performed)
+        {
+            _ball.Unlock();
+        }
     }
 
     public void LeftMouse(InputAction.CallbackContext context)

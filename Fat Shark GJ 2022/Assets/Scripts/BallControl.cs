@@ -15,7 +15,6 @@ public class BallControl : MonoBehaviour
     private Vector2 _respawn;
     private Rigidbody2D _rb;
     private bool _isMoving;
-    private float _oldSpeed;
 
     public UnityEvent onBallStoppedMoving;
     public UnityEvent onBallStartedMoving;
@@ -37,10 +36,8 @@ public class BallControl : MonoBehaviour
 
     private void CheckForStop()
     {
-        if (_oldSpeed > _rb.velocity.magnitude && _rb.velocity.magnitude < _minimumVelocity)
+        if (_rb.velocity == Vector2.zero)
         {
-            _rb.velocity = Vector2.zero;
-            _rb.isKinematic = true;
             if (_isMoving)
             {
                 transform.rotation = Quaternion.identity;
@@ -56,7 +53,6 @@ public class BallControl : MonoBehaviour
             _isMoving = true;
             Debug.Log("A ball started moving");
         }
-        _oldSpeed = _rb.velocity.magnitude;
     }
 
     public void DrawStrikeIndicator(Vector2 origin, Vector2 position)
