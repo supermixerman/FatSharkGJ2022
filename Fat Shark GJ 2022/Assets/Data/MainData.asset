@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd071c421b29f3242b19f49a6ba44274, type: 3}
   m_Name: MainData
   m_EditorClassIdentifier: 
-  totalPlayers: 0
+  totalPlayers: 1
