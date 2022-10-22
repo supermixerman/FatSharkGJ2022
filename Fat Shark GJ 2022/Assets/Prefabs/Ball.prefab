@@ -117,7 +117,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 0.3
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: b7c37289863c4e4498a1c50fd8fcd209, type: 2}
@@ -139,8 +139,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _strikeModifier: 0.229
   _strikeIndicatorScaleModifier: 0.013
-  _minimumVelocity: 0.15
-  _strikeIndicatorOffset: 0.5
+  _minimumVelocity: 0.3
+  _strikeIndicatorOffset: 0.194
   _strikeIndicator: {fileID: 8976692476124409168}
   onBallStoppedMoving:
     m_PersistentCalls:
