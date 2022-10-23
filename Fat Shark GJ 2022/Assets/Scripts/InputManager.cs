@@ -57,6 +57,7 @@ public class InputManager : MonoBehaviour
             _mouseDown = false;
 
             _ball.Strike(CalculateStrike(_mouseDownPosition, _mouseUpPosition));
+            GameManager.gameManager.StartWaitForTurn();
             _didAction = true;
         }
     }
@@ -74,6 +75,11 @@ public class InputManager : MonoBehaviour
     public void SetActiveBall(BallControl newBall){
         _ball = newBall;
         _didAction = false;
+    }
+
+    public bool GetDidAction()
+    {
+        return _didAction;
     }
 
     //public void ChangeBall()

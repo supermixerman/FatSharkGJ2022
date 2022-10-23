@@ -105,22 +105,11 @@ public class BallControl : MonoBehaviour
     public void SetWeight(float newWeight)
     {
         _rb.mass = newWeight;
-    
+
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Respawn"))
-        {
-            CheckPoint checkPoint = other.gameObject.GetComponent<CheckPoint>();
-            _respawnPosition = checkPoint.GetRespawnLocation();
-
-            if (checkPoint.IsWinCheck())
-            {
-                GameManager.gameManager.Victory();
-            }
-        }
-
-        else if (other.gameObject.CompareTag("Level"))
+        if (other.gameObject.CompareTag("Level"))
         {
             if (other.gameObject.transform.position.y < this.transform.position.y - _myRadius && transform.position.y < _levelFloorHeight)
             {
@@ -138,11 +127,31 @@ public class BallControl : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("Ontriggerenter");
+        if (other.gameObject.CompareTag("Respawn"))
+        {
+            CheckPoint checkPoint = other.gameObject.GetComponent<CheckPoint>();
+            _respawnPosition = checkPoint.GetRespawnLocation();
+
+            if (checkPoint.IsWinCheck())
+            {
+                GameManager.gameManager.Victory();
+            }
+        }
+    }
+
     private void Die()
     {
         Debug.Log("A ball died");
         SoundManager.soundManager.PlayDeath();
         transform.position = _respawnPosition;
+    }
+
+    public bool GetIsMoving()
+    {
+        return _isMoving;
     }
 }
 

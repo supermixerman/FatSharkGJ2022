@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameData gameData;
 
     public bool victory;
+    private bool _waitForNextTurn;
 
     UIText gameUI;
 
@@ -35,6 +36,16 @@ public class GameManager : MonoBehaviour
     {
         gameUI = inGameUI.GetComponent<UIText>();
         StartGame(gameData.totalPlayers);
+        _waitForNextTurn = true;
+    }
+
+    private void LateUpdate()
+    {
+        Debug.Log(_waitForNextTurn);
+        if (AllBallsStopped() && InputManager.inputManager.GetDidAction() && !_waitForNextTurn)
+        {
+            NextTurn();
+        }
     }
 
     public void StartGame(int players){
@@ -91,12 +102,14 @@ public class GameManager : MonoBehaviour
         UpdateGameUI();
         CameraFollow(playerList[turn].transform);
         InputManager.inputManager.SetActiveBall(playerList[turn].GetComponent<BallControl>());
+        _waitForNextTurn = true;
     }
 
     public void Victory(){
         victory = true;
         winnerScreen.SetActive(true);
         winnerScreen.GetComponent<UIText>().SetText("Winner: " + playerList[turn].name);
+        Debug.Log("A ball has one the game");
     }
 
     public void UpdateGameUI(){
@@ -110,5 +123,28 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame(){
         SceneManager.LoadScene(0);
+    }
+
+    private bool AllBallsStopped()
+    {
+        foreach (GameObject ball in playerList)
+        {
+            if (ball.GetComponent<BallControl>().GetIsMoving())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void StartWaitForTurn()
+    {
+        StartCoroutine(WaitForTurn());
+    }
+
+    private IEnumerator WaitForTurn()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _waitForNextTurn = false;
     }
 }
