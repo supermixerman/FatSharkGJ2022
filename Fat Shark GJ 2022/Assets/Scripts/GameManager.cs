@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
         winnerScreen.SetActive(true);
         inGameUI.SetActive(false);
         winnerScreen.GetComponent<UIText>().SetText("Winner: " + playerList[turn].name);
-        Debug.Log("A ball has one the game");
+        Debug.Log("A ball has won the game");
     }
 
     public void UpdateGameUI(){

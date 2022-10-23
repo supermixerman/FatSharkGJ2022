@@ -65,10 +65,6 @@ public class InputManager : MonoBehaviour
     private Vector2 CalculateStrike(Vector2 hitPosition, Vector2 releasePosition)
     {
         Vector2 strike = hitPosition - releasePosition;
-        if (strike.magnitude > _maxStrikeCharge)
-        {
-            strike = strike.normalized * _maxStrikeCharge;
-        }
         return strike;
     }
 
