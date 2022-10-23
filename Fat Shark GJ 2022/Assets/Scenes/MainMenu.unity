@@ -1150,8 +1150,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 152.3808, y: 90.034}
-  m_SizeDelta: {x: 304.7616, y: 180.0675}
+  m_AnchoredPosition: {x: 163.7, y: 97.015}
+  m_SizeDelta: {x: 304.7616, y: 194.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &886286232
 MonoBehaviour:
@@ -1174,8 +1174,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Credits:\nGustav Englund - Programmer\nLeo Raitaniemi - Programmer\n\nRasmus
-    M\xF6llerstedt - Pixel Art\n\nJohan Rosenberg - Level Design\n\nAdam Janus -
-    Sound Design"
+    M\xF6llerstedt - Pixel Art\nKevin - Background Art\n\nJohan Rosenberg - Level
+    Design\n\nAdam Janus - Sound Design"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 252f5613a8a2a52409d9ad16af373096, type: 2}
   m_sharedMaterial: {fileID: -7237874941681372641, guid: 252f5613a8a2a52409d9ad16af373096, type: 2}
@@ -1618,7 +1618,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -121.64911, y: 49.796432}
+  m_AnchoredPosition: {x: -130.1, y: 49.796432}
   m_SizeDelta: {x: 243.29822, y: 99.7929}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1084567710
