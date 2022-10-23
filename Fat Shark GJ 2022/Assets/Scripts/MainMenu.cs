@@ -9,6 +9,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameData gameData;
     [SerializeField] TMP_Dropdown dropDown;
 
+    private void Start() {
+        gameData.totalPlayers = 1;
+    }
     public void SetTotalPlayers(){
         gameData.totalPlayers = dropDown.value + 1;
         Debug.Log("Total Players: " + gameData.totalPlayers);
