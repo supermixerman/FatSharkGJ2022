@@ -25,6 +25,7 @@ public class BallControl : MonoBehaviour
     private bool _hasBomb;
     private bool _fortify;
 
+
     public UnityEvent onBallStoppedMoving;
     public UnityEvent onBallStartedMoving;
 
@@ -217,6 +218,32 @@ public class BallControl : MonoBehaviour
         }
         SetWeight(10);
         Debug.Log("A ball is fortified until the start of it's next turn");
+    {
+        if (type == 0)
+        {
+            _hasBomb = true;
+            _bombTimer = 3f;
+            GameManager.gameManager.StartWaitForTurn(3f);
+        }
+    }
+
+    private void ActivateBomb()
+    {
+        if (!_hasBomb)
+        {
+            return;
+        }
+        else
+        {
+            _bombTimer -= Time.fixedDeltaTime;
+            if (_bombTimer < 0)
+            {
+                Instantiate(_bombExplosion, transform.position, Quaternion.identity);
+                _hasBomb=false;
+                GameManager.gameManager.StartWaitForTurn(3f);
+            }
+
+        }
     }
 }
 
