@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1094407869101519519
+--- !u!1 &4747551980312780302
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,66 +8,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7209881255587047633}
-  - component: {fileID: 7443881358373259291}
-  - component: {fileID: 5415729390693070920}
+  - component: {fileID: 4747551980312780296}
+  - component: {fileID: 4747551980312780297}
   m_Layer: 0
-  m_Name: SoundManager
+  m_Name: MusicPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7209881255587047633
+--- !u!4 &4747551980312780296
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094407869101519519}
+  m_GameObject: {fileID: 4747551980312780302}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.3382034, y: 0.21218264, z: -0.13760962}
+  m_LocalPosition: {x: 0.19313975, y: -0.0044039637, z: -0.27051273}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7443881358373259291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094407869101519519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f493bd78e88509439daf3003ec3a41a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _swingSound: {fileID: 8300000, guid: 56ed50b0b5cd2064d8eaca9e193c1424, type: 3}
-  _grassSound: {fileID: 8300000, guid: 171abb55c9d9b4847b61e2bb59bf2cc2, type: 3}
-  _wallSound: {fileID: 8300000, guid: dfd8d991da346df458b62302bb279b5d, type: 3}
-  _scoreSound: {fileID: 8300000, guid: 326110fa07c5d7f4e940e128c79e5dcc, type: 3}
-  _deathSound: {fileID: 8300000, guid: 68012007d64206c4490139381a043c83, type: 3}
-  _fallSound: {fileID: 8300000, guid: 7a445e7d3efa4934a835b8f57a171a58, type: 3}
-  _explosionSound: {fileID: 8300000, guid: 0917ec29695bf28408b1a6769362bea6, type: 3}
-  _fortifySound: {fileID: 8300000, guid: 0bcca2907571f97458af075ed799f44d, type: 3}
---- !u!82 &5415729390693070920
+--- !u!82 &4747551980312780297
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094407869101519519}
+  m_GameObject: {fileID: 4747551980312780302}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d7ef703b99e5c8548aeaffa1dd7701f3, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.766
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

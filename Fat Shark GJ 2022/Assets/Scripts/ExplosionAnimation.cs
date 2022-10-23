@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.TextCore.Text;
 public class ExplosionAnimation : MonoBehaviour
 {
-    private float _explosionModifier = 10f;
+    private float _explosionModifier = 7.5f;
 
     public void Explode()
     {
@@ -17,6 +17,7 @@ public class ExplosionAnimation : MonoBehaviour
                 collider.gameObject.GetComponent<Rigidbody2D>().AddForce((direction + Vector2.up) * _explosionModifier, ForceMode2D.Impulse);
             }
         }
+        SoundManager.soundManager.PlayExplosion();
     }
 
     public void RemoveSelf()
