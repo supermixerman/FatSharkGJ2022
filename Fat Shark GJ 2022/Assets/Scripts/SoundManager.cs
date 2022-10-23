@@ -11,6 +11,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip _scoreSound;
     [SerializeField] private AudioClip _deathSound;
     [SerializeField] private AudioClip _fallSound;
+    [SerializeField] private AudioClip _explosionSound;
+    [SerializeField] private AudioClip _fortifySound;
 
 
     private AudioSource _audioSource;
@@ -62,5 +64,15 @@ public class SoundManager : MonoBehaviour
     public void PlayFall()
     {
         _audioSource.PlayOneShot(_fallSound);
+    }
+
+    public void PlayExplosion()
+    {
+        _audioSource.PlayOneShot(_explosionSound);
+    }
+
+    public void PlayFortify()
+    {
+        _audioSource.PlayOneShot(_fortifySound);
     }
 }
