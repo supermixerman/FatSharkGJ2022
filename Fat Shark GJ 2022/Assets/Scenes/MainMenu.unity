@@ -1270,7 +1270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &889838620
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1595,7 +1595,7 @@ GameObject:
   - component: {fileID: 1084567711}
   - component: {fileID: 1084567710}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: GJInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1616,10 +1616,10 @@ RectTransform:
   m_Father: {fileID: 401269165}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 278.3509, y: -175.20357}
-  m_SizeDelta: {x: 243.2982, y: 99.7929}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -121.64911, y: 49.796432}
+  m_SizeDelta: {x: 243.29822, y: 99.7929}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1084567710
 MonoBehaviour:
