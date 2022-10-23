@@ -72,9 +72,9 @@ public class GameManager : MonoBehaviour
             playerList.Add(Instantiate(playerPrefab, spawnLocations[i].position, Quaternion.identity));
             playerList[i].gameObject.name = "Player " + (i+1);
             Debug.Log(playerList[i].gameObject.name);
-            if (playerColorsList.Count >= playerList.Count){ //Set player color
+            /*if (playerColorsList.Count >= playerList.Count){ //Set player color
                 playerList[i].GetComponent<SpriteRenderer>().color = playerColorsList[i];
-            }
+            }*/
         }
     }
 
@@ -108,13 +108,15 @@ public class GameManager : MonoBehaviour
     public void Victory(){
         victory = true;
         winnerScreen.SetActive(true);
+        inGameUI.SetActive(false);
         winnerScreen.GetComponent<UIText>().SetText("Winner: " + playerList[turn].name);
         Debug.Log("A ball has one the game");
     }
 
     public void UpdateGameUI(){
+        Debug.Log("UI Updated");
         gameUI.SetTextColor(playerColorsList[turn]);
-        gameUI.SetText(playerList[turn].name);
+        gameUI.SetText(playerList[turn].name + " turn");
     }
 
     public void QuitGame(){
