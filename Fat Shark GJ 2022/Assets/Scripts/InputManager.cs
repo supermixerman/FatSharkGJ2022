@@ -70,6 +70,7 @@ public class InputManager : MonoBehaviour
 
     public void SetActiveBall(BallControl newBall){
         _ball = newBall;
+        _ball.SetWeight(1);
         _didAction = false;
     }
 

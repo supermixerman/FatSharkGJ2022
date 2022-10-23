@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine;
 using System;
-//using TreeEditor;
 
 public class BallControl : MonoBehaviour
 {
@@ -14,13 +11,20 @@ public class BallControl : MonoBehaviour
     [SerializeField] private float _strikeIndicatorOffset;
     [SerializeField] private float _scaleModifier;
     [SerializeField] private float _levelFloorHeight;
+
     [SerializeField] GameObject _strikeIndicator;
+    [SerializeField] GameObject _bombExplosion;
 
     private Vector2 _respawnPosition;
     private Rigidbody2D _rb;
     private bool _isMoving;
     private float _oldSpeed;
     private float _myRadius;
+    private float _bombTimer;
+
+    private bool _hasBomb;
+    private bool _fortify;
+
 
     public UnityEvent onBallStoppedMoving;
     public UnityEvent onBallStartedMoving;
@@ -43,6 +47,7 @@ public class BallControl : MonoBehaviour
 
     private void FixedUpdate()
     {
+        ActivateBomb();
         ForceStop();
         CheckForStop();
     }
@@ -56,6 +61,7 @@ public class BallControl : MonoBehaviour
                 transform.rotation = Quaternion.identity;
                 _isMoving = false;
                 onBallStoppedMoving.Invoke();
+                ActivateFortify();
                 Debug.Log("A ball stopped moving");
             }
         }
@@ -149,6 +155,11 @@ public class BallControl : MonoBehaviour
                 GameManager.gameManager.Victory();
             }
         }
+        else if (other.gameObject.CompareTag("Powerup"))
+        {
+            RecievePowerup(other.gameObject.GetComponent<Powerup>().GetPowerupType());
+            Destroy(other.gameObject);
+        }
     }
 
     private void Die()
@@ -158,9 +169,81 @@ public class BallControl : MonoBehaviour
         transform.position = _respawnPosition;
     }
 
-    public bool GetIsMoving()
+    public bool GetIsMoving() { return _isMoving; }
+
+    public bool GetHasBomb() { return _hasBomb; }
+
+    private void RecievePowerup(int type)
     {
-        return _isMoving;
+        if (type == 0)
+        {
+            _hasBomb = true;
+            _bombTimer = 3f;
+            GameManager.gameManager.StartWaitForTurn(3f);
+        }
+        else if (type == 1)
+        {
+            _rb.AddForce(_rb.velocity + Vector2.up * 5f, ForceMode2D.Impulse);
+        }
+        else if (type == 2)
+        {
+            _fortify = true;
+        }
+    }
+
+    private void ActivateBomb()
+    {
+        if (!_hasBomb)
+        {
+            return;
+        }
+        else
+        {
+            _bombTimer -= Time.fixedDeltaTime;
+            if (_bombTimer < 0)
+            {
+                Instantiate(_bombExplosion, transform.position, Quaternion.identity);
+                _hasBomb=false;
+                GameManager.gameManager.StartWaitForTurn(3f);
+            }
+
+        }
+    }
+
+    private void ActivateFortify()
+    {
+        if (!_fortify)
+        {
+            return;
+        }
+        SetWeight(10);
+        Debug.Log("A ball is fortified until the start of it's next turn");
+    {
+        if (type == 0)
+        {
+            _hasBomb = true;
+            _bombTimer = 3f;
+            GameManager.gameManager.StartWaitForTurn(3f);
+        }
+    }
+
+    private void ActivateBomb()
+    {
+        if (!_hasBomb)
+        {
+            return;
+        }
+        else
+        {
+            _bombTimer -= Time.fixedDeltaTime;
+            if (_bombTimer < 0)
+            {
+                Instantiate(_bombExplosion, transform.position, Quaternion.identity);
+                _hasBomb=false;
+                GameManager.gameManager.StartWaitForTurn(3f);
+            }
+
+        }
     }
 }
 
