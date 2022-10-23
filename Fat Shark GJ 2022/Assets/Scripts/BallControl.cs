@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine;
 using System;
-using TreeEditor;
 
 public class BallControl : MonoBehaviour
 {
@@ -26,6 +23,8 @@ public class BallControl : MonoBehaviour
     private float _bombTimer;
 
     private bool _hasBomb;
+    private bool _fortify;
+
 
     public UnityEvent onBallStoppedMoving;
     public UnityEvent onBallStartedMoving;
@@ -62,6 +61,7 @@ public class BallControl : MonoBehaviour
                 transform.rotation = Quaternion.identity;
                 _isMoving = false;
                 onBallStoppedMoving.Invoke();
+                ActivateFortify();
                 Debug.Log("A ball stopped moving");
             }
         }
@@ -174,6 +174,50 @@ public class BallControl : MonoBehaviour
     public bool GetHasBomb() { return _hasBomb; }
 
     private void RecievePowerup(int type)
+    {
+        if (type == 0)
+        {
+            _hasBomb = true;
+            _bombTimer = 3f;
+            GameManager.gameManager.StartWaitForTurn(3f);
+        }
+        else if (type == 1)
+        {
+            _rb.AddForce(_rb.velocity + Vector2.up * 5f, ForceMode2D.Impulse);
+        }
+        else if (type == 2)
+        {
+            _fortify = true;
+        }
+    }
+
+    private void ActivateBomb()
+    {
+        if (!_hasBomb)
+        {
+            return;
+        }
+        else
+        {
+            _bombTimer -= Time.fixedDeltaTime;
+            if (_bombTimer < 0)
+            {
+                Instantiate(_bombExplosion, transform.position, Quaternion.identity);
+                _hasBomb=false;
+                GameManager.gameManager.StartWaitForTurn(3f);
+            }
+
+        }
+    }
+
+    private void ActivateFortify()
+    {
+        if (!_fortify)
+        {
+            return;
+        }
+        SetWeight(10);
+        Debug.Log("A ball is fortified until the start of it's next turn");
     {
         if (type == 0)
         {
