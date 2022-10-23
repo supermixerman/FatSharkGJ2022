@@ -10,6 +10,7 @@ public class BallControl : MonoBehaviour
     [SerializeField][Range(0, 1f)] private float _strikeModifier;
     [SerializeField][Range(0, 1f)] private float _strikeIndicatorScaleModifier;
     [SerializeField] private float _minimumVelocity;
+    [SerializeField] private float _maxStrikeCharge;
     [SerializeField] private float _strikeIndicatorOffset;
     [SerializeField] private float _scaleModifier;
     [SerializeField] private float _levelFloorHeight;
@@ -32,6 +33,10 @@ public class BallControl : MonoBehaviour
 
     public void Strike(Vector2 strike)
     {
+        if (strike.magnitude > _maxStrikeCharge)
+        {
+            strike = strike.normalized * _maxStrikeCharge;
+        }
         _rb.AddForce(strike * _strikeModifier, ForceMode2D.Impulse);
         SoundManager.soundManager.PlaySwing();
     }
@@ -77,13 +82,17 @@ public class BallControl : MonoBehaviour
     {
         Vector2 scaleVector = origin - position;
         float scale = scaleVector.magnitude;
-        scale = scale * _strikeIndicatorScaleModifier;
+        if (scale > _maxStrikeCharge)
+        {
+            scale = _maxStrikeCharge;
+        }
+        scale = scale * _strikeIndicatorScaleModifier + 0.5f;
 
         scaleVector.Normalize();
 
         _strikeIndicator.SetActive(true);
 
-        _strikeIndicator.transform.localPosition = - scaleVector * (scale + _strikeIndicatorOffset);
+        _strikeIndicator.transform.localPosition = - scaleVector * (scale * 0.5f + _strikeIndicatorOffset);
 
         if (scaleVector.x <= 0)
         {
@@ -111,7 +120,7 @@ public class BallControl : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Level"))
         {
-            if (other.gameObject.transform.position.y < this.transform.position.y - _myRadius && transform.position.y < _levelFloorHeight)
+            if (/*other.gameObject.transform.position.y < this.transform.position.y - _myRadius && */transform.position.y < _levelFloorHeight)
             {
                 SoundManager.soundManager.PlayHitGrass();
             }

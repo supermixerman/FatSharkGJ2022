@@ -139,11 +139,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _strikeModifier: 0.229
-  _strikeIndicatorScaleModifier: 0.013
+  _strikeIndicatorScaleModifier: 0.204
   _minimumVelocity: 0.6
-  _strikeIndicatorOffset: 0.13
-  _scaleModifier: 0.52
-  _levelFloorHeight: 0
+  _maxStrikeCharge: 65
+  _strikeIndicatorOffset: 1.12
+  _scaleModifier: 0.49
+  _levelFloorHeight: -3.67
   _strikeIndicator: {fileID: 8976692476124409168}
   onBallStoppedMoving:
     m_PersistentCalls:
