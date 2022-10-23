@@ -149,6 +149,7 @@ public class BallControl : MonoBehaviour
         {
             CheckPoint checkPoint = other.gameObject.GetComponent<CheckPoint>();
             _respawnPosition = checkPoint.GetRespawnLocation();
+            SoundManager.soundManager.PlayScore();
 
             if (checkPoint.IsWinCheck())
             {
