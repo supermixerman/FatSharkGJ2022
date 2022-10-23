@@ -120,8 +120,8 @@ public class BallControl : MonoBehaviour
     public void SetWeight(float newWeight)
     {
         _rb.mass = newWeight;
-
     }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Level"))
@@ -217,33 +217,8 @@ public class BallControl : MonoBehaviour
             return;
         }
         SetWeight(10);
+        _fortify = false;
         Debug.Log("A ball is fortified until the start of it's next turn");
-    {
-        if (type == 0)
-        {
-            _hasBomb = true;
-            _bombTimer = 3f;
-            GameManager.gameManager.StartWaitForTurn(3f);
-        }
-    }
-
-    private void ActivateBomb()
-    {
-        if (!_hasBomb)
-        {
-            return;
-        }
-        else
-        {
-            _bombTimer -= Time.fixedDeltaTime;
-            if (_bombTimer < 0)
-            {
-                Instantiate(_bombExplosion, transform.position, Quaternion.identity);
-                _hasBomb=false;
-                GameManager.gameManager.StartWaitForTurn(3f);
-            }
-
-        }
     }
 }
 
