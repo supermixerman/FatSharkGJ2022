@@ -129,22 +129,28 @@ public class GameManager : MonoBehaviour
     {
         foreach (GameObject ball in playerList)
         {
-            if (ball.GetComponent<BallControl>().GetIsMoving())
+            BallControl ballControl = ball.GetComponent<BallControl>();
+            if (ballControl.GetIsMoving())
             {
                 return false;
+            }
+            else if (ballControl.GetHasBomb()) 
+            { 
+                return false; 
             }
         }
         return true;
     }
 
-    public void StartWaitForTurn()
+    public void StartWaitForTurn(float time=0.5f)
     {
-        StartCoroutine(WaitForTurn());
+        _waitForNextTurn = true;
+        StartCoroutine(WaitForTurn(time));
     }
 
-    private IEnumerator WaitForTurn()
+    private IEnumerator WaitForTurn(float time=0.5f)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(time);
         _waitForNextTurn = false;
     }
 }
