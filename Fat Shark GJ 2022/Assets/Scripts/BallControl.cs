@@ -149,6 +149,7 @@ public class BallControl : MonoBehaviour
         {
             CheckPoint checkPoint = other.gameObject.GetComponent<CheckPoint>();
             _respawnPosition = checkPoint.GetRespawnLocation();
+            SoundManager.soundManager.PlayScore();
 
             if (checkPoint.IsWinCheck())
             {
@@ -183,7 +184,14 @@ public class BallControl : MonoBehaviour
         }
         else if (type == 1)
         {
-            _rb.AddForce(_rb.velocity + Vector2.up * 5f, ForceMode2D.Impulse);
+            if (_rb.velocity.y < 0)
+            {
+                _rb.AddForce(new Vector2(_rb.velocity.x, -_rb.velocity.y * 2), ForceMode2D.Impulse);
+            }
+            else
+            {
+                _rb.AddForce(_rb.velocity, ForceMode2D.Impulse);
+            }
         }
         else if (type == 2)
         {
@@ -218,7 +226,8 @@ public class BallControl : MonoBehaviour
         }
         SetWeight(10);
         _fortify = false;
-        Debug.Log("A ball is fortified until the start of it's next turn");
+        SoundManager.soundManager.PlayFortify();
+        GameManager.gameManager.StartWaitForTurn(2f);
     }
 }
 
